@@ -3,6 +3,8 @@ import Anime from "@/models/anime.model";
 import Stream from "@/models/stream.model";
 import { NextRequest, NextResponse } from "next/server";
 
+const dynamic = 'force-dynamic';
+
 export const GET = async (request: NextRequest) => {
   await dbConnect();
   try {
