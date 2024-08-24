@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = 'mongodb://localhost:27017/animehatori';
+const password = "R19yJzPgRXIwERQx";
 
-if (!MONGODB_URI) {
+const LocalUri = `mongodb://localhost:27017/animehatori`;
+const RemoteUri = `mongodb://tamakuz:${password}@cluster0-shard-00-00.onqly.mongodb.net:27017,cluster0-shard-00-01.onqly.mongodb.net:27017,cluster0-shard-00-02.onqly.mongodb.net:27017/?ssl=true&replicaSet=atlas-8a28iu-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0`;
+
+if (!LocalUri || !RemoteUri) {
   throw new Error(
     'Please define the MONGODB_URI environment variable inside .env.local'
   );
@@ -14,7 +17,7 @@ async function dbConnect() {
   }
 
   try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(RemoteUri, {
       bufferCommands: false,
     });
     console.log('Connected to MongoDB');
