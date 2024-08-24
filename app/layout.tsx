@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Home, List, Search, User } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +16,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="scrollbar-none">
+      <body
+        className={`${inter.className} max-w-sm mx-auto bg-foreground relative scrollbar-none`}
+      >
+        {children}
+        <nav className="fixed bottom-0 left-0 right-0 p-4 max-w-sm mx-auto bg-foreground">
+          <div className="flex justify-around items-center text-secondary">
+            <Home className="w-6 h-6" />
+            <Search className="w-6 h-6" />
+            <List className="w-6 h-6" />
+            <User className="w-6 h-6" />
+          </div>
+        </nav>
+      </body>
     </html>
   );
 }
