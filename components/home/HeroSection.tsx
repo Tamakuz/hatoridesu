@@ -1,7 +1,7 @@
 "use client";
 import useFetch from "@/hooks/useFetch";
 import { AnimeDocument } from "@/types/anime.type";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";

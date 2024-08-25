@@ -17,7 +17,7 @@ async function dbConnect() {
   }
 
   try {
-    await mongoose.connect(RemoteUri, {
+    await mongoose.connect(LocalUri, {
       bufferCommands: false,
     });
     console.log('Connected to MongoDB');

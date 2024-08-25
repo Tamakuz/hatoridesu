@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Home, List, Search, User } from "lucide-react";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,10 +24,18 @@ export default function RootLayout({
         {children}
         <nav className="fixed bottom-0 left-0 right-0 p-4 max-w-sm mx-auto bg-foreground">
           <div className="flex justify-around items-center text-secondary">
-            <Home className="w-6 h-6" />
-            <Search className="w-6 h-6" />
-            <List className="w-6 h-6" />
-            <User className="w-6 h-6" />
+            <Link href="/">
+              <span><Home className="w-6 h-6" /></span>
+            </Link>
+            <Link href="/search">
+              <span><Search className="w-6 h-6" /></span>
+            </Link>
+            <Link href="/list">
+              <span><List className="w-6 h-6" /></span>
+            </Link>
+            <Link href="/user">
+              <span><User className="w-6 h-6" /></span>
+            </Link>
           </div>
         </nav>
       </body>
