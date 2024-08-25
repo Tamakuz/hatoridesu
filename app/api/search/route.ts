@@ -17,14 +17,13 @@ export const GET = async (request: NextRequest) => {
 
     const cleanedQuery = cleanInput(searchQuery);
 
-    // Prioritaskan pencarian berdasarkan judul penuh
+    // Gunakan fitur search dari Mongoose
     const animeResults = await Anime.find({
-      $or: [
-        { title: { $regex: cleanedQuery, $options: 'i' } },
-        { altTitle: { $regex: cleanedQuery, $options: 'i' } },
-        { synopsis: { $regex: cleanedQuery, $options: 'i' } },
-        { 'genres.label': { $regex: cleanedQuery, $options: 'i' } }
-      ]
+      $text: { $search: cleanedQuery }
+    }, {
+      score: { $meta: "textScore" }
+    }).sort({
+      score: { $meta: "textScore" }
     }).limit(30);
 
     return new Response(JSON.stringify(animeResults), {
