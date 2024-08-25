@@ -2,6 +2,8 @@ import dbConnect from '@/lib/dbConnect';
 import Anime from '@/models/anime.model';
 import { NextRequest } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export const GET = async (request: NextRequest) => {
   try {
     await dbConnect();
