@@ -8,10 +8,19 @@ export const GET = async (req: NextRequest, { params }: { params: { slug: string
   const slug = params.slug;
   
   try {
-    const anime = await Anime.findOne({ title: slug }).populate({
+    const anime = await Anime.findById(slug).populate({
       path: "episodes.streams",
-      model: Stream
+      model: Stream,
+      match: {
+        urlStream: { $regex: /^(https:\/\/www\.blogger\.com\/|https:\/\/new\.uservideo\.xyz\/)/ }
+      }
     });
+
+    if (!anime.episodes.every((episode: any) => episode.streams.length > 0)) {
+      const animeWithoutMatch = await Anime.findById(slug).populate("episodes.streams");
+      return NextResponse.json(animeWithoutMatch);
+    }
+    
     if (!anime) {
       return NextResponse.json({ message: "Anime not found" }, { status: 404 });
     }

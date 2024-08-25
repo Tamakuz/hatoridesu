@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import CryptoJS from "crypto-js"
+import Hashids from 'hashids';
 
 const SECRET_KEY = "JgBOro7Zb8";
 
@@ -8,13 +8,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function encrypt(id: string) {
-  const encrypted = CryptoJS.AES.encrypt(id, SECRET_KEY).toString();
-  return encodeURIComponent(encrypted); // Use encodeURIComponent to make it URL-safe
+const hashids = new Hashids(SECRET_KEY, 10);
+
+export function encodeId(id: string) {
+  const hash = hashids.encodeHex(id);
+  return hash;
 }
 
-export function decrypt(encryptedId: string) {
-  const bytes = CryptoJS.AES.decrypt(decodeURIComponent(encryptedId), SECRET_KEY);
-  const originalText = bytes.toString(CryptoJS.enc.Utf8);
-  return originalText;
+// Function to decode hash back to the original ID
+export function decodeId(hash: string) {
+  const decoded = hashids.decodeHex(hash);
+  return decoded ? decoded : null; // Ensure the decoded result is returned as a string or null if the decoding fails
 }
